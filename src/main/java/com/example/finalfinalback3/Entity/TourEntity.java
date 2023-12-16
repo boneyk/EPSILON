@@ -1,7 +1,9 @@
 package com.example.finalfinalback3.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.security.core.userdetails.User;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -24,11 +26,15 @@ public class TourEntity {
     private Integer price_per_one;
     private String description;
 
-    // TODO Переписать под таблицу смежности
     @ManyToMany
     @JoinTable(name="tour_image",
             joinColumns = @JoinColumn(name = "tour_id"),
             inverseJoinColumns = @JoinColumn(name = "image_id")
     )
     private List<ImageEntity> images;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "favorites")
+    private List<UserEntity> favorites;
+
 }

@@ -1,16 +1,8 @@
 package com.example.finalfinalback3.Entity;
 
-import com.example.finalfinalback3.Enum.RoleEnum;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
 import java.util.List;
 
 @Data
@@ -23,6 +15,14 @@ public class UserEntity{// implements UserDetails {
     private String login;
     private String password;
     private String password_confirm;
+
+    @ManyToMany
+    @JoinTable(name="user_favorites",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "tour_id")
+    )
+    private List<TourEntity> favorites;
+
     //TODO Добавить картинку пользователя
     //@Enumerated(EnumType.STRING)
     //private RoleEnum role;

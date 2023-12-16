@@ -19,7 +19,6 @@ public class ImageEntity {
     private String size;
     private String content_type;
 
-    //TODO переписать под таблицу смежности
     @JsonIgnore
     @ManyToMany(mappedBy = "images")
     private Set<TourEntity> tours = new HashSet<>();

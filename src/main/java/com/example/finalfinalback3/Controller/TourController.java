@@ -59,4 +59,42 @@ public class TourController {
             return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/favorite")
+    public ResponseEntity showFavoriteTours(@RequestParam Integer user_id){
+        try{
+            return new ResponseEntity(tourService.showFavoriteTours(user_id), HttpStatus.OK);
+        } catch (DataNotFoundException e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/favorite/{tour_id}/to/{user_id}")
+    public ResponseEntity addFavorite(@PathVariable Integer tour_id,
+                                      @PathVariable Integer user_id){
+        try{
+            tourService.addFavorite(tour_id, user_id);
+            return new ResponseEntity(HttpStatus.OK);
+        } catch (DataNotFoundException e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("favorite/{tour_id}/from/{user_id}")
+    public ResponseEntity removeFromFavorite(@PathVariable Integer tour_id,
+                                             @PathVariable Integer user_id){
+        try{
+            tourService.removeFromFavorite(tour_id, user_id);
+            return new ResponseEntity(HttpStatus.OK);
+        } catch (DataNotFoundException e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

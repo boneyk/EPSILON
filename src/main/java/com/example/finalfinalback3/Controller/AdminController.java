@@ -2,7 +2,6 @@ package com.example.finalfinalback3.Controller;
 
 import com.example.finalfinalback3.DTO.ImageAddDTO;
 import com.example.finalfinalback3.DTO.TourAddDTO;
-import com.example.finalfinalback3.DTO.TourMainDTO;
 import com.example.finalfinalback3.Entity.TourEntity;
 import com.example.finalfinalback3.Entity.UserEntity;
 import com.example.finalfinalback3.Exceptions.DataAlreadyExistsException;
@@ -33,7 +32,7 @@ public class AdminController {
     @GetMapping("/users/{id}")
     public ResponseEntity getUserById(@PathVariable Integer id){
         try {
-            UserEntity user = userService.getSingleUser(id);
+            UserEntity user = userService.getUserById(id);
             return new ResponseEntity(user, HttpStatus.OK);
         }
         catch (DataNotFoundException e){

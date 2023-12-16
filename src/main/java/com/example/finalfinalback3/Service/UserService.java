@@ -30,11 +30,12 @@ public class UserService {
 
 
     //Спросить насчёт использования Optional
-    public UserEntity getSingleUser(Integer id) throws DataNotFoundException {
-        if (userRepo.findById(id).get() == null) {
+    public UserEntity getUserById(Integer id) throws DataNotFoundException {
+        Optional<UserEntity> user = userRepo.findById(id);
+        if (user.isEmpty()) {
             throw new DataNotFoundException("Пользователя с таким id не существует!");
         }
-        return userRepo.findById(id).get();
+        return user.get();
     }
 
     public List<UserEntity> showAll() throws DataNotFoundException{
@@ -58,6 +59,10 @@ public class UserService {
         //    throw new DataAlreadyExistsException("О пользователе уже есть личная информация!");
         //}
         return infoRepo.save(modelMapper.map(info, PersonalInfoEntity.class));
+    }
+
+    public void saveUser(UserEntity user) {
+        userRepo.save(user);
     }
 }
 
