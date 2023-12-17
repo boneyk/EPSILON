@@ -71,7 +71,7 @@ public class TourController {
         }
     }
 
-    @PutMapping("/favorite/{tour_id}/to/{user_id}")
+    @PatchMapping("/favorite/{tour_id}/to/{user_id}")
     public ResponseEntity addFavorite(@PathVariable Integer tour_id,
                                       @PathVariable Integer user_id){
         try{
