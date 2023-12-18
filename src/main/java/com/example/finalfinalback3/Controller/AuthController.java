@@ -29,9 +29,8 @@ public class AuthController {
     @PostMapping("/reg")
     public ResponseEntity registration(@RequestBody UserRegisterDTO user) {
         try {
-            authService.registration(user);
             //List<TourMainDTO> tour_list = tourService.showAll();
-            return new ResponseEntity(HttpStatus.CREATED);
+            return new ResponseEntity(authService.registration(user),HttpStatus.CREATED);
         } catch (DataAlreadyExistsException | PasswordsNotSameException e) {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
@@ -47,8 +46,7 @@ public class AuthController {
     @PostMapping
     public ResponseEntity authUser(@RequestBody UserAuthDTO user){
         try{
-            authService.authUser(user);
-            return new ResponseEntity(HttpStatus.OK);
+            return new ResponseEntity(authService.authUser(user), HttpStatus.OK);
         }
         catch (DataNotFoundException | PasswordsNotSameException e) {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
