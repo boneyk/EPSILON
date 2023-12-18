@@ -29,10 +29,10 @@ public class AuthService {
         if (!find_user.getPassword().equals(user.getPassword())){
             throw new PasswordsNotSameException("Неверный пароль!");
         }
-        return(find_user.getId());
+        return find_user.getId();
     }
 
-    public UserEntity registration(UserRegisterDTO user) throws DataAlreadyExistsException,
+    public Integer registration(UserRegisterDTO user) throws DataAlreadyExistsException,
             PasswordsNotSameException {
         UserEntity find_user = authRepo.findByLogin(user.getLogin());
         if (find_user != null) {
@@ -41,7 +41,8 @@ public class AuthService {
         if (!user.getPassword().equals(user.getPassword_confirm())){
             throw new PasswordsNotSameException("Пароли не совпадают");
         }
-        return authRepo.save(modelMapper.map(user, UserEntity.class));
+        UserEntity new_user = authRepo.save(modelMapper.map(user, UserEntity.class));
+        return new_user.getId();
     }
 
 }
