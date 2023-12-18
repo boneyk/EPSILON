@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 
+@CrossOrigin(origins = "*")
+
 @RestController
 @RequestMapping("/api/tours")
 public class TourController {
