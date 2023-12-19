@@ -1,11 +1,9 @@
 package com.example.finalfinalback3.Service;
 
 import com.example.finalfinalback3.DTO.PersonalInfoAddDTO;
-import com.example.finalfinalback3.Entity.PersonalInfoEntity;
+import com.example.finalfinalback3.DTO.PersonalInfoMainDTO;
 import com.example.finalfinalback3.Entity.UserEntity;
-import com.example.finalfinalback3.Exceptions.DataAlreadyExistsException;
 import com.example.finalfinalback3.Exceptions.DataNotFoundException;
-import com.example.finalfinalback3.Repository.PersonalInfoRepository;
 import com.example.finalfinalback3.Repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +17,10 @@ public class UserService {
 
     @Autowired
     private final UserRepository userRepo;
-    private final PersonalInfoRepository infoRepo;
     private final ModelMapper modelMapper;
 
-    public UserService(UserRepository userRepo, PersonalInfoRepository infoRepo, ModelMapper modelMapper) {
+    public UserService(UserRepository userRepo, ModelMapper modelMapper) {
         this.userRepo = userRepo;
-        this.infoRepo = infoRepo;
         this.modelMapper = modelMapper;
     }
 
@@ -52,17 +48,22 @@ public class UserService {
         userRepo.deleteById(id);
         return id;
     }
-
-    public PersonalInfoEntity addPersonalInfo(PersonalInfoAddDTO info) throws DataAlreadyExistsException{
-        //Optional<PersonalInfoEntity> find_info = infoRepo.findById(info.getId());
-        //if (find_info.isPresent()) {
-        //    throw new DataAlreadyExistsException("О пользователе уже есть личная информация!");
-        //}
-        return infoRepo.save(modelMapper.map(info, PersonalInfoEntity.class));
-    }
-
     public void saveUser(UserEntity user) {
         userRepo.save(user);
     }
+
+    //Прости, Господь, за это
+    public UserEntity addPersonalInfo(PersonalInfoAddDTO info, Integer user_id) throws DataNotFoundException{
+        UserEntity user = getUserById(user_id);
+        user.setFullname(info.getFullname());
+        user.setPhone_number(info.getPhone_number());
+        return userRepo.save(user);
+    }
+
+    public PersonalInfoMainDTO showPersonalInfo(Integer id) throws DataNotFoundException{
+        UserEntity user = getUserById(id);
+        return modelMapper.map(user, PersonalInfoMainDTO.class);
+    }
+
 }
 

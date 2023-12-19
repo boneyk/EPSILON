@@ -23,6 +23,8 @@ public class UserEntity{// implements UserDetails {
     )
     private List<TourEntity> favorites;
 
+    private String fullname;
+    private String phone_number;
     //TODO Добавить картинку пользователя
     //@Enumerated(EnumType.STRING)
     //private RoleEnum role;

@@ -17,7 +17,7 @@ public class DataFillerService {
     private final AuthService authService;
     private final TourService tourService;
     private final ImageService imageService;
-    private final  UserService userService;
+    private final UserService userService;
     public DataFillerService(AuthService authService, TourService tourService, ImageService imageService, UserService userService) {
         this.authService = authService;
         this.tourService = tourService;
@@ -40,22 +40,25 @@ public class DataFillerService {
         authService.registration(user4);
 
 
-        ImageAddDTO image1 = new ImageAddDTO("example_image", "/images/", "smth_important", "1920x1080", ".jpg");
-        ImageAddDTO image2 = new ImageAddDTO("epsilon", "/images/", "logo", "50x50", ".png");
-        //ImageAddDTO image3 = new ImageAddDTO("example_image", "/images/", "smth_important", "1920x1080", ".png");
-        //ImageAddDTO image4 = new ImageAddDTO("example_image", "/images/", "smth_important", "1920x1080", ".png");
-        //ImageAddDTO image5 = new ImageAddDTO("example_image", "/images/", "smth_important", "1920x1080", ".png");
-        //ImageAddDTO image6 = new ImageAddDTO("example_image", "/images/", "smth_important", "1920x1080", ".png");
-
+        ImageAddDTO image1 = new ImageAddDTO("egyptanoubis", "/images/", "anoubis", "1920x1080", ".png");
+        ImageAddDTO image2 = new ImageAddDTO("thailandbangkok", "/images/", "bangkok", "1920x1080", ".png");
+        ImageAddDTO image3 = new ImageAddDTO("japantokyo", "/images/", "japantokyo", "1920x1080", ".png");
+        ImageAddDTO image4 = new ImageAddDTO("koreaseoul", "/images/", "koreaseoul", "1920x1080", ".png");
+        ImageAddDTO image5 = new ImageAddDTO("americamaiami", "/images/", "americamaiami", "1920x1080", ".png");
+        ImageAddDTO image6 = new ImageAddDTO("russiabaikal", "/images/", "russiabaikal", "1920x1080", ".png");
         imageService.addImage(image1);
         imageService.addImage(image2);
+        imageService.addImage(image3);
+        imageService.addImage(image4);
+        imageService.addImage(image5);
+        imageService.addImage(image6);
 
-        TourAddDTO tour1 = new TourAddDTO("Hot Egypt tour!", "Egypt", "Anoubis", LocalDate.of(2024, 7, 1), LocalDate.of(2024, 7, 16), "Foreign", 30, 99999, "some description here. Lorem ipsum sol amer grou fat yvur sop gtariqus divun gopraf");
-        TourAddDTO tour2 = new TourAddDTO("Popular Thailand tour!", "Thailand", "Bangkok", LocalDate.of(2024, 9, 15), LocalDate.of(2024,10, 15), "Foreign", 64, 150156, "some description here. Lorem ipsum sol amer grou fat yvur sop gtariqus divun gopraf");
-        TourAddDTO tour3 = new TourAddDTO("Visit Japan!", "Japan", "Tokyo", LocalDate.of(2024, 6, 8), LocalDate.of(2024,6, 1), "Foreign", 15, 90000, "some description here. Lorem ipsum sol amer grou fat yvur sop gtariqus divun gopraf");
-        TourAddDTO tour4 = new TourAddDTO("Fall into Korea!", "Korea", "Seoul", LocalDate.of(2024, 10, 18), LocalDate.of(2024,8, 18), "Foreign", 100, 200000, "some description here. Lorem ipsum sol amer grou fat yvur sop gtariqus divun gopraf");
-        TourAddDTO tour5 = new TourAddDTO("Hot Mayami beach!", "America", "Maiami", LocalDate.of(2024, 7, 31), LocalDate.of(2024,6, 1), "Foreign", 10, 502000, "some description here. Lorem ipsum sol amer grou fat yvur sop gtariqus divun gopraf");
-        TourAddDTO tour6 = new TourAddDTO("Special Baikal offer!", "Russia", "Baikal", LocalDate.of(2024, 1, 8), LocalDate.of(2023,12, 29), "Russia", 120, 50000, "some description here. Lorem ipsum sol amer grou fat yvur sop gtariqus divun gopraf");
+        TourAddDTO tour1 = new TourAddDTO("Горячая путёвка в Египет!", "Египет", "Анубис", LocalDate.of(2024, 7, 1), LocalDate.of(2024, 7, 16), "Международный", 30, 99999, "some description here. Lorem ipsum sol amer grou fat yvur sop gtariqus divun gopraf");
+        TourAddDTO tour2 = new TourAddDTO("Гостеприимный Тайланд", "Тайланд", "Бангкок", LocalDate.of(2024, 9, 15), LocalDate.of(2024,10, 15), "Международный", 64, 150156, "some description here. Lorem ipsum sol amer grou fat yvur sop gtariqus divun gopraf");
+        TourAddDTO tour3 = new TourAddDTO("Страна восходящего Солнца!", "Япония", "Токио", LocalDate.of(2024, 6, 8), LocalDate.of(2024,6, 1), "Международный", 15, 90000, "some description here. Lorem ipsum sol amer grou fat yvur sop gtariqus divun gopraf");
+        TourAddDTO tour4 = new TourAddDTO("Страна будущего!", "Корея", "Сеул", LocalDate.of(2024, 10, 18), LocalDate.of(2024,8, 18), "Международный", 100, 200000, "some description here. Lorem ipsum sol amer grou fat yvur sop gtariqus divun gopraf");
+        TourAddDTO tour5 = new TourAddDTO("Бархатистые пески Майями!", "Америка", "Майями", LocalDate.of(2024, 7, 31), LocalDate.of(2024,6, 1), "Международный", 10, 502000, "some description here. Lorem ipsum sol amer grou fat yvur sop gtariqus divun gopraf");
+        TourAddDTO tour6 = new TourAddDTO("Зимний Байкал", "Россия", "Байкал", LocalDate.of(2024, 1, 8), LocalDate.of(2023,12, 29), "По России", 120, 50000, "some description here. Lorem ipsum sol amer grou fat yvur sop gtariqus divun gopraf");
 
         tourService.addTour(tour1);
         tourService.addTour(tour2);
@@ -64,9 +67,9 @@ public class DataFillerService {
         tourService.addTour(tour5);
         tourService.addTour(tour6);
 
-        PersonalInfoAddDTO person1 = new PersonalInfoAddDTO(2, "Epsilon Developer team", "+79991115050");
+        PersonalInfoAddDTO person1 = new PersonalInfoAddDTO("Epsilon Developer team", "+79991115050");
 
-        //userService.addPersonalInfo(person1);
+        userService.addPersonalInfo(person1, 2);
     }
 
 }
