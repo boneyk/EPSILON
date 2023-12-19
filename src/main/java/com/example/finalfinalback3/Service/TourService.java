@@ -1,9 +1,6 @@
 package com.example.finalfinalback3.Service;
 
-import com.example.finalfinalback3.DTO.TourAddDTO;
-import com.example.finalfinalback3.DTO.TourFavoriteDTO;
-import com.example.finalfinalback3.DTO.TourHistoryDTO;
-import com.example.finalfinalback3.DTO.TourMainDTO;
+import com.example.finalfinalback3.DTO.*;
 import com.example.finalfinalback3.Entity.ImageEntity;
 import com.example.finalfinalback3.Entity.TourEntity;
 import com.example.finalfinalback3.Entity.UserEntity;
@@ -154,5 +151,11 @@ public class TourService {
                 .stream()
                 .map(tour -> modelMapper.map(tour, TourHistoryDTO.class))
                 .toList();
+    }
+
+    public OrderDetailsDTO showOrderDetails(Integer userId, Integer tourId) throws DataNotFoundException {
+        UserEntity user = userService.getUserById(userId);
+        TourEntity tour = getTourById(tourId);
+        return new OrderDetailsDTO(tour, user);
     }
 }
