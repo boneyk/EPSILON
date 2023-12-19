@@ -123,6 +123,20 @@ public class TourController {
         }
     }
 
+    @GetMapping("/order")
+    public ResponseEntity showOrderDetails(@RequestParam Integer user_id,
+                                           @RequestParam Integer tour_id){
+        try{
+            return new ResponseEntity(tourService.showOrderDetails(user_id, tour_id), HttpStatus.OK);
+        } catch (DataNotFoundException e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    
+
 
 
 }
