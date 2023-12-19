@@ -15,6 +15,8 @@ public class UserEntity{// implements UserDetails {
     private String login;
     private String password;
     private String password_confirm;
+    private String fullname;
+    private String phone_number;
 
     @ManyToMany
     @JoinTable(name="user_favorites",
@@ -23,8 +25,13 @@ public class UserEntity{// implements UserDetails {
     )
     private List<TourEntity> favorites;
 
-    private String fullname;
-    private String phone_number;
+    @ManyToMany
+    @JoinTable(name="user_history",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "tour_id")
+    )
+    private List<TourEntity> history;
+
     //TODO Добавить картинку пользователя
     //@Enumerated(EnumType.STRING)
     //private RoleEnum role;

@@ -2,6 +2,7 @@ package com.example.finalfinalback3.Service;
 
 import com.example.finalfinalback3.DTO.TourAddDTO;
 import com.example.finalfinalback3.DTO.TourFavoriteDTO;
+import com.example.finalfinalback3.DTO.TourHistoryDTO;
 import com.example.finalfinalback3.DTO.TourMainDTO;
 import com.example.finalfinalback3.Entity.ImageEntity;
 import com.example.finalfinalback3.Entity.TourEntity;
@@ -131,5 +132,27 @@ public class TourService {
         user.getFavorites().remove(tour);
         userService.saveUser(user);
         return user;
+    }
+
+    public TourEntity addTourToHistory(Integer tour_id, Integer user_id) throws DataNotFoundException{
+        TourEntity tour = getTourById(tour_id);
+        UserEntity user = userService.getUserById(user_id);
+        List<TourEntity> history = user.getHistory();
+        history.add(tour);
+        user.setHistory(history);
+        userService.saveUser(user);
+        return tour;
+    }
+
+    public List<TourHistoryDTO> showHistory(@NonNull Integer user_id) throws DataNotFoundException{
+        Iterable<TourEntity> tours = tourRepo.findAllByHistory(userService.getUserById(user_id));
+        if (!tours.iterator().hasNext()){
+            throw new DataNotFoundException("Как же так?! Вы нигде ещё не отдыхали! Надо исправлять!");
+        }
+
+        return Streamable.of(tours)
+                .stream()
+                .map(tour -> modelMapper.map(tour, TourHistoryDTO.class))
+                .toList();
     }
 }

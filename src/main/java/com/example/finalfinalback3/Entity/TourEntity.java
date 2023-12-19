@@ -37,4 +37,8 @@ public class TourEntity {
     @ManyToMany(mappedBy = "favorites")
     private List<UserEntity> favorites;
 
+    @JsonIgnore
+    @ManyToMany(mappedBy = "history")
+    private List<UserEntity> history;
+
 }

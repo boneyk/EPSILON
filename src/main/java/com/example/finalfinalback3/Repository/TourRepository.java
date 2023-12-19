@@ -15,4 +15,5 @@ public interface TourRepository extends CrudRepository<TourEntity, Integer> {
     );
 
     List<TourEntity> findAllByFavorites(UserEntity user);
+    List<TourEntity> findAllByHistory(UserEntity user);
 }
