@@ -32,6 +32,8 @@ public class UserEntity{// implements UserDetails {
     )
     private List<TourEntity> history;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private DocumentEntity doc;
     //TODO Добавить картинку пользователя
     //@Enumerated(EnumType.STRING)
     //private RoleEnum role;

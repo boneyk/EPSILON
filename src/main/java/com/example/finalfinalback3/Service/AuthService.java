@@ -14,9 +14,11 @@ import org.springframework.stereotype.Service;
 public class AuthService {
     
     private final AuthRepository authRepo;
+    private final DocumentService docService;
     private final ModelMapper modelMapper;
-    public AuthService(AuthRepository authRepo, ModelMapper modelMapper) {
+    public AuthService(AuthRepository authRepo, DocumentService docService, ModelMapper modelMapper) {
         this.authRepo = authRepo;
+        this.docService = docService;
         this.modelMapper = modelMapper;
     }
 
@@ -42,7 +44,8 @@ public class AuthService {
             throw new PasswordsNotSameException("Пароли не совпадают");
         }
         UserEntity new_user = authRepo.save(modelMapper.map(user, UserEntity.class));
-        return new_user.getId();
+        //docService.addDocument(new_user.getId());
+        return authRepo.save(new_user).getId();
     }
 
 }
