@@ -31,22 +31,22 @@ public class DocumentService {
         return docRepo.findById(id).get();
     }
 
-    public DocumentEntity addDocument(Integer user_id) throws DataNotFoundException{
-        UserEntity user = userService.getUserById(user_id);
+    public DocumentEntity addDocument(String token) throws DataNotFoundException{
+        UserEntity user = userService.getUserByToken(token);
         DocumentEntity empty_doc = new DocumentEntity();
         //DocumentEntity new_doc = modelMapper.map(empty_doc, DocumentEntity.class);
         empty_doc.setUser(user);
         DocumentEntity doc = docRepo.save(empty_doc);
         user.setDoc(doc);
-        empty_doc.setId(user_id);
+        empty_doc.setId(user.getId());
         userService.saveUser(user);
         return doc;
     }
-    public PassportEntity addPassport(PassportAddDTO passport, Integer user_id) throws DataNotFoundException{
-        UserEntity user = userService.getUserById(user_id);
+    public PassportEntity addPassport(PassportAddDTO passport, String token) throws DataNotFoundException{
+        UserEntity user = userService.getUserByToken(token);
         DocumentEntity doc = user.getDoc();
         if (doc == null){
-            doc = addDocument(user_id);
+            doc = addDocument(token);
         }
         PassportEntity new_passport = new PassportEntity(passport);//modelMapper.map(passport, PassportEntity.class);
         new_passport.setDoc(doc);
@@ -57,8 +57,8 @@ public class DocumentService {
         return new_passport_entity;
     }
 
-    public DocumentEntity showDocuments(Integer user_id) throws DataNotFoundException{
-        UserEntity user = userService.getUserById(user_id);
+    public DocumentEntity showDocuments(String token) throws DataNotFoundException{
+        UserEntity user = userService.getUserByToken(token);
         DocumentEntity doc = user.getDoc();
         if (doc == null){
             throw new DataNotFoundException("Документов пока нет!");

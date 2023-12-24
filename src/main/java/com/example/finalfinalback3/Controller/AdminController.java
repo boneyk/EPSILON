@@ -30,10 +30,10 @@ public class AdminController {
         this.imageService = imageService;
     }
 
-    @GetMapping("/users/{id}")
-    public ResponseEntity getUserById(@PathVariable Integer id){
+    @GetMapping("/users/{user_id}")
+    public ResponseEntity getUserById(@PathVariable Integer user_id){
         try {
-            UserEntity user = userService.getUserById(id);
+            UserEntity user = userService.getUserById(user_id);
             return new ResponseEntity(user, HttpStatus.OK);
         }
         catch (DataNotFoundException e){
@@ -49,6 +49,20 @@ public class AdminController {
         try {
             List<UserEntity> user_list = userService.showAll();
             return new ResponseEntity(user_list, HttpStatus.OK);
+        } catch (DataNotFoundException e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    //TODO Доработать под создание произвольных ролей
+    @PatchMapping("/users/{user_id}")
+    public ResponseEntity setUserRoleAdmin(@PathVariable Integer user_id){
+        try{
+            userService.setUserRoleAdmin(user_id);
+            return new ResponseEntity(HttpStatus.OK);
         } catch (DataNotFoundException e){
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

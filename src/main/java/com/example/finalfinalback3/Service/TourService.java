@@ -91,8 +91,8 @@ public class TourService {
                 .toList();
     }
 
-    public List<TourFavoriteDTO> showFavoriteTours(@NonNull Integer user_id) throws DataNotFoundException{
-        Iterable<TourEntity> tours = tourRepo.findAllByFavorites(userService.getUserById(user_id));
+    public List<TourFavoriteDTO> showFavoriteTours(@NonNull String token) throws DataNotFoundException{
+        Iterable<TourEntity> tours = tourRepo.findAllByFavorites(userService.getUserByToken(token));
         if (!tours.iterator().hasNext()){
             throw new DataNotFoundException("Избранных туров пока нет. Надо исправлять!");
         }
@@ -104,9 +104,9 @@ public class TourService {
     }
 
     //Криво, косо, но пойдёт
-    public TourEntity addFavorite(Integer tour_id, Integer user_id) throws DataNotFoundException{
+    public TourEntity addFavorite(Integer tour_id, String token) throws DataNotFoundException{
         TourEntity tour = getTourById(tour_id);
-        UserEntity user = userService.getUserById(user_id);
+        UserEntity user = userService.getUserByToken(token);
         List<TourEntity> favorites_list = user.getFavorites();
         favorites_list.add(tour);
         user.setFavorites(favorites_list);
@@ -114,12 +114,12 @@ public class TourService {
         return tour;
     }
 
-    public UserEntity removeFromFavorite(Integer tour_id, Integer user_id) throws DataNotFoundException{
+    public UserEntity removeFromFavorite(Integer tour_id, String token) throws DataNotFoundException{
         if (tourRepo.findById(tour_id).isEmpty()){
             throw new DataNotFoundException("Такого тура не cуществует");
         }
 
-        UserEntity user = userService.getUserById(user_id);
+        UserEntity user = userService.getUserByToken(token);
         TourEntity tour = tourRepo.findById(tour_id).get();
 
         if (!user.getFavorites().contains(tour)){
@@ -131,9 +131,9 @@ public class TourService {
         return user;
     }
 
-    public TourEntity addTourToHistory(Integer tour_id, Integer user_id) throws DataNotFoundException{
+    public TourEntity addTourToHistory(Integer tour_id, String token) throws DataNotFoundException{
         TourEntity tour = getTourById(tour_id);
-        UserEntity user = userService.getUserById(user_id);
+        UserEntity user = userService.getUserByToken(token);
         List<TourEntity> history = user.getHistory();
         history.add(tour);
         user.setHistory(history);
@@ -141,8 +141,8 @@ public class TourService {
         return tour;
     }
 
-    public List<TourHistoryDTO> showHistory(@NonNull Integer user_id) throws DataNotFoundException{
-        Iterable<TourEntity> tours = tourRepo.findAllByHistory(userService.getUserById(user_id));
+    public List<TourHistoryDTO> showHistory(@NonNull String token) throws DataNotFoundException{
+        Iterable<TourEntity> tours = tourRepo.findAllByHistory(userService.getUserByToken(token));
         if (!tours.iterator().hasNext()){
             throw new DataNotFoundException("Как же так?! Вы нигде ещё не отдыхали! Надо исправлять!");
         }
@@ -153,8 +153,8 @@ public class TourService {
                 .toList();
     }
 
-    public OrderDetailsDTO showOrderDetails(Integer userId, Integer tourId) throws DataNotFoundException {
-        UserEntity user = userService.getUserById(userId);
+    public OrderDetailsDTO showOrderDetails(String token, Integer tourId) throws DataNotFoundException {
+        UserEntity user = userService.getUserByToken(token);
         TourEntity tour = getTourById(tourId);
         return new OrderDetailsDTO(tour, user);
     }

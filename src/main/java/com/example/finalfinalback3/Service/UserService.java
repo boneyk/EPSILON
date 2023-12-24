@@ -5,6 +5,7 @@ import com.example.finalfinalback3.DTO.PersonalInfoMainDTO;
 import com.example.finalfinalback3.Entity.UserEntity;
 import com.example.finalfinalback3.Exceptions.DataNotFoundException;
 import com.example.finalfinalback3.Repository.UserRepository;
+import org.apache.catalina.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,14 @@ public class UserService {
         return user.get();
     }
 
+    public UserEntity getUserByToken(String token) throws DataNotFoundException {
+        Optional<UserEntity> user = Optional.ofNullable(userRepo.findByToken(token));
+        if (user.isEmpty()) {
+            throw new DataNotFoundException("Пользователь с таким токеном не авторизован!");
+        }
+        return user.get();
+    }
+
     public List<UserEntity> showAll() throws DataNotFoundException{
         if (userRepo.findAll() == null){
             throw new DataNotFoundException("Нет пользователей в базе данных...");
@@ -53,17 +62,22 @@ public class UserService {
     }
 
     //Прости, Господь, за это
-    public UserEntity addPersonalInfo(PersonalInfoAddDTO info, Integer user_id) throws DataNotFoundException{
-        UserEntity user = getUserById(user_id);
+    public UserEntity addPersonalInfo(PersonalInfoAddDTO info, String token) throws DataNotFoundException{
+        UserEntity user = getUserByToken(token);
         user.setFullname(info.getFullname());
         user.setPhone_number(info.getPhone_number());
         return userRepo.save(user);
     }
 
-    public PersonalInfoMainDTO showPersonalInfo(Integer id) throws DataNotFoundException{
-        UserEntity user = getUserById(id);
+    public PersonalInfoMainDTO showPersonalInfo(String token) throws DataNotFoundException{
+        UserEntity user = getUserByToken(token);
         return modelMapper.map(user, PersonalInfoMainDTO.class);
     }
 
+    public UserEntity setUserRoleAdmin(Integer id) throws DataNotFoundException{
+        UserEntity user = getUserById(id);
+        user.setRole("ADMIN");
+        return userRepo.save(user);
+    }
 }
 

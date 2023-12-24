@@ -2,6 +2,7 @@ package com.example.finalfinalback3.Entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.List;
 
@@ -17,6 +18,9 @@ public class UserEntity{// implements UserDetails {
     private String password_confirm;
     private String fullname;
     private String phone_number;
+    //@Column(columnDefinition = "varchar(255) default 'ROLE_USER'")
+    private String role;
+    private String token;
 
     @ManyToMany
     @JoinTable(name="user_favorites",

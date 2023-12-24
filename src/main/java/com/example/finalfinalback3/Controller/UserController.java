@@ -31,11 +31,11 @@ public class UserController {
         }
     }
 
-    @PatchMapping("/{user_id}/info")
+    @PatchMapping("/info")
     public ResponseEntity addPersonalInfo(@RequestBody PersonalInfoAddDTO info,
-                                          @PathVariable Integer user_id) {
+                                          @RequestParam String token) {
         try {
-            userService.addPersonalInfo(info, user_id);
+            userService.addPersonalInfo(info, token);
             return new ResponseEntity(HttpStatus.OK);
         } catch (DataNotFoundException e){
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -46,9 +46,9 @@ public class UserController {
     }
 
     @GetMapping("/info")
-    public ResponseEntity showPersonalInfo(@RequestParam Integer user_id) {
+    public ResponseEntity showPersonalInfo(@RequestParam String token) {
         try {
-            return new ResponseEntity(userService.showPersonalInfo(user_id), HttpStatus.OK);
+            return new ResponseEntity(userService.showPersonalInfo(token), HttpStatus.OK);
         } catch (DataNotFoundException e){
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

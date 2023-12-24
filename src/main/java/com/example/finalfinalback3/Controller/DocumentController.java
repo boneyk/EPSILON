@@ -24,30 +24,29 @@ public class DocumentController {
     }
 
     @PatchMapping("/add")
-    public ResponseEntity addEmptyDocument(@RequestParam Integer user_id){
-        docService.addDocument(user_id);
+    public ResponseEntity addEmptyDocument(@RequestParam String token){
+        docService.addDocument(token);
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
     @PatchMapping("/passport")
     public ResponseEntity addPassport(@RequestBody PassportAddDTO passport,
-                                      @RequestParam Integer user_id) {
-        docService.addPassport(passport, user_id);
-        return new ResponseEntity(HttpStatus.CREATED);
-//        try {
-//            docService.addPassport(passport, user_id);
-//            return new ResponseEntity(HttpStatus.CREATED);
-//        } catch (DataAlreadyExistsException e) {
-//            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
-//        } catch (Exception e) {
-//            return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
+                                      @RequestParam String token) throws DataNotFoundException {
+        try {
+            docService.addPassport(passport, token);
+            return new ResponseEntity(HttpStatus.CREATED);
+        }
+        catch (DataNotFoundException e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping()
-    public ResponseEntity showDocuments(@RequestParam Integer user_id) {
+    public ResponseEntity showDocuments(@RequestParam String token) {
         try {
-            return new ResponseEntity(docService.showDocuments(user_id), HttpStatus.OK);
+            return new ResponseEntity(docService.showDocuments(token), HttpStatus.OK);
         } catch (DataNotFoundException e){
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
