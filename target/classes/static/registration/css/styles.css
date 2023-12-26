@@ -1,0 +1,210 @@
+body{
+	margin: 0%;
+}
+.text,.l{
+	font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+header {
+	display: flex;
+	width: 100%;
+	height: 121px;
+	border-bottom: 2px solid #000;
+}
+#img_17{
+	width:124px;
+	height:98px;
+	margin-top: 11px;
+	margin-left: 197px;
+}
+.one{
+	width: 247px;
+	height: 41px;
+	margin-top: 44px;
+	margin-left: 19px;
+	font-size: 20px;
+}
+.two{
+	width: 345px;
+	height: 41px;
+	margin-top: 44px;
+	margin-left: 323px;
+	font-size: 16px;
+}
+.REG{
+	background-color: rgb(221, 223, 235);
+	width:1050px;
+	height:659px;
+	position: absolute;
+	top: 130px;/*смещение для блоков в меню*/
+	left: 185px;
+}
+#rect_85-1{
+	width: 451px;
+	height: 481px;
+	position: absolute;
+	top: 85px; /*272-197*/
+	left: 44px; /*229-185*/
+}
+.three{
+	width: 555px;
+	height: 45px;
+	position: absolute;
+	top: 11px;
+	left: 480px;
+	text-align: center;
+	font-size: 30px;
+}
+.four{
+	width: 450px;
+	height: 60px;
+	position: absolute;
+	top:65px;
+	left:530px;
+	text-align: center;
+	font-size: 19px;
+}
+form{
+	text-align: center;
+	display: block;
+	width: 410px;
+	height: 250px;
+	position: absolute;
+	top:130px;
+	left:570px;
+}
+.inform{
+	text-align: left;
+}
+.l{
+	margin-top: 35px;
+	font-size: 17px;
+}
+.i{
+	width: 381px;
+	height: 30px;
+}
+.zelenie_ikonki{
+	display: flex;
+	width: 332px;
+	height: 49px;
+	background-color: rgb(60, 90, 92);
+	align-items: center;
+	justify-content: center;
+}
+.zareg{
+	color: white;
+	background-color: rgb(60, 90, 92);
+	border: none;
+	text-decoration: none;
+	font-size: 25px;
+}
+.zareg{
+	position: absolute;
+	top:420px;
+	left:30px;
+}
+.zareg:hover {
+	background-color: rgb(60, 90, 92);
+	border: none;
+	text-decoration: underline;
+}
+footer{
+	width: 100%;
+	height: 250px;
+	border-top: 2px solid #000;
+	position: absolute;
+	top:800px;
+	overflow: hidden;/*остановим прокрутку страницы после границы блока*/
+}
+.o_nas{
+	width: 930px;
+	height: 90px;
+	background-color: rgb(233, 221, 221);
+	font-size: 19px;
+	position: relative;
+	left: 260px;
+	top: 15px;
+}
+.seven{
+	text-align: center;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+.mi_v_setiah{
+	width: 188px;
+	height: 75px;
+	position: relative;
+	top:40px;
+	left:300px;
+}
+.ikonki{
+	display: flex;
+	gap:10px;
+	justify-content: center;
+	align-items: center;
+}
+.eight{
+	margin-top: 0px;
+	margin-bottom: 0px;
+	text-align: center;
+}
+.slushba_1{
+	display: block;
+	width: 180px;
+	height: 60px;
+	position: relative;
+	top:-40px;
+	left:700px;
+}
+.rectangle{
+	text-align: center;
+	width: 170px;
+	height: 25px;
+	background-color: rgb(233, 221, 221);
+}
+.ten{
+	width: 170px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	text-align: center;
+}
+.slushba_2{
+	display: block;
+	width: 180px;
+	height: 60px;
+	position: relative;
+	top:-100px;
+	left:930px;
+}
+.eleven{
+	width: 170px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	text-align: center;
+}
+.niz{
+	width: 100%;
+	height: 25px;
+	border-top: 1px solid #000;
+	position: absolute;
+	top:220px;
+}
+.twelve{
+	position: absolute;
+	top:-15px;
+	left:250px;
+}
+input[type="submit"]{
+	font-size: 25px;
+	color:white;
+	background-color: rgb(60, 90, 92);
+	border: none;
+	text-decoration: none;
+}
+input[type="submit"]:hover{
+	font-size: 25px;
+	color:white;
+	background-color: rgb(60, 90, 92);
+	border: none;
+	text-decoration: underline;
+	}
