@@ -4,6 +4,7 @@ import com.example.finalfinalback3.DTO.ImageAddDTO;
 import com.example.finalfinalback3.DTO.PersonalInfoAddDTO;
 import com.example.finalfinalback3.DTO.TourAddDTO;
 import com.example.finalfinalback3.DTO.UserRegisterDTO;
+import com.example.finalfinalback3.Model.Token;
 import com.example.finalfinalback3.Security.AuthService;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
@@ -36,7 +37,7 @@ public class DataFillerService {
         UserRegisterDTO user4 = new UserRegisterDTO("Petrovich@gmail.com", "Petrovich", "123", "123");
 
         authService.registration(user1);
-        String user2_token = authService.registration(user2);
+        Token user2_token = authService.registration(user2);
         authService.registration(user3);
         authService.registration(user4);
 
@@ -72,7 +73,7 @@ public class DataFillerService {
 
         PersonalInfoAddDTO person1 = new PersonalInfoAddDTO("Epsilon Developer team", "+79991115050");
 
-        userService.addPersonalInfo(person1, user2_token);
+        userService.addPersonalInfo(person1, user2_token.getToken());
     }
 
 }

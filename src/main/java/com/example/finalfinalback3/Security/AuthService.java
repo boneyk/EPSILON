@@ -6,6 +6,7 @@ import com.example.finalfinalback3.Entity.UserEntity;
 import com.example.finalfinalback3.Exceptions.DataAlreadyExistsException;
 import com.example.finalfinalback3.Exceptions.DataNotFoundException;
 import com.example.finalfinalback3.Exceptions.PasswordsNotSameException;
+import com.example.finalfinalback3.Model.Token;
 import com.example.finalfinalback3.Repository.UserRepository;
 import com.example.finalfinalback3.Service.DocumentService;
 import org.modelmapper.ModelMapper;
@@ -34,7 +35,7 @@ public class AuthService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public String authUser(UserAuthDTO user,
+    public Token authUser(UserAuthDTO user,
                             Map<String, String> headers) throws DataNotFoundException,
                                                                 PasswordsNotSameException {
         UserEntity find_user = authRepo.findByLogin(user.getLogin());
@@ -47,10 +48,10 @@ public class AuthService implements UserDetailsService {
         }//find_user.getId();
         //find_user.setToken(token);
         //userRepo.save(find_user);
-        return find_user.getToken();
+        return  new Token(find_user.getToken());
     }
 
-    public String registration(UserRegisterDTO user) throws DataAlreadyExistsException,
+    public Token registration(UserRegisterDTO user) throws DataAlreadyExistsException,
             PasswordsNotSameException {
         UserEntity find_user = authRepo.findByLogin(user.getLogin());
         if (find_user != null) {
@@ -64,7 +65,7 @@ public class AuthService implements UserDetailsService {
         UserEntity new_user = authRepo.save(modelMapper.map(user, UserEntity.class));
         new_user.setToken(passwordEncoder.encode(user.getLogin()));
         //docService.addDocument(new_user.getId());
-        return authRepo.save(new_user).getToken();
+        return new Token(authRepo.save(new_user).getToken());
     }
 
     @Override
