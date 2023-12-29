@@ -17,6 +17,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 
 @Service
@@ -63,10 +65,11 @@ public class AuthService implements UserDetailsService {
         user.setPassword(passwordEncoder.encode(user.getPassword())); // Кодируем пароль пользователя перед сохранением
         user.setPassword_confirm(passwordEncoder.encode(user.getPassword_confirm()));
         UserEntity new_user = authRepo.save(modelMapper.map(user, UserEntity.class));
-        new_user.setToken(passwordEncoder.encode(user.getLogin()));
+        new_user.setToken(hashCode(user.getLogin()));
         //docService.addDocument(new_user.getId());
         return new Token(authRepo.save(new_user).getToken());
     }
+
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
@@ -76,4 +79,24 @@ public class AuthService implements UserDetailsService {
         }
         return modelMapper.map(user, UserAuthPrincipal.class);
     }
+
+    //TODO вынести отдельным классом
+    private String hashCode(String input) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(input.getBytes());
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : hash) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) {
+                    hexString.append('0');
+                }
+                hexString.append(hex);
+            }
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
