@@ -1,7 +1,8 @@
 package com.example.finalfinalback3.Controller;
 
-import com.example.finalfinalback3.DTO.PersonalInfoAddDTO;
+import com.example.finalfinalback3.DTO.AccountInfoChangeDTO;
 import com.example.finalfinalback3.Exceptions.DataNotFoundException;
+import com.example.finalfinalback3.Security.AuthService;
 import com.example.finalfinalback3.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,10 +14,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/users")
 public class UserController {
     private final UserService userService;
+    private final AuthService authService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, AuthService authService) {
         this.userService = userService;
+        this.authService = authService;
     }
 
     @DeleteMapping("/{id}")
@@ -32,11 +35,10 @@ public class UserController {
     }
 
     @PatchMapping("/info")
-    public ResponseEntity addPersonalInfo(@RequestBody PersonalInfoAddDTO info,
+    public ResponseEntity changeAccountInfo(@RequestBody AccountInfoChangeDTO info,
                                           @RequestParam String token) {
         try {
-            userService.addPersonalInfo(info, token);
-            return new ResponseEntity(HttpStatus.OK);
+            return new ResponseEntity(authService.changeAccountInfo(info, token), HttpStatus.OK);
         } catch (DataNotFoundException e){
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -46,9 +48,9 @@ public class UserController {
     }
 
     @GetMapping("/info")
-    public ResponseEntity showPersonalInfo(@RequestParam String token) {
+    public ResponseEntity showAccountInfo(@RequestParam String token) {
         try {
-            return new ResponseEntity(userService.showPersonalInfo(token), HttpStatus.OK);
+            return new ResponseEntity(userService.showAccountInfo(token), HttpStatus.OK);
         } catch (DataNotFoundException e){
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

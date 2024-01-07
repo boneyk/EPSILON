@@ -2,21 +2,33 @@ package com.example.finalfinalback3.Entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
 
 @Entity
 @Data
 @NoArgsConstructor
 public class DocumentEntity {
     @Id
+    @GeneratedValue
     private Integer id;
+    private String token;
+    private String fullname;
+    private String phone_number;
+    private String sex;
+    //@JsonProperty("date_of_birth")
+    private LocalDate dob;
+
+
     @OneToOne(cascade = CascadeType.ALL)
     private PassportEntity passport;
 
-    @OneToOne
-    @MapsId
+    @ManyToOne
+    //@MapsId
     @JsonIgnore
     private UserEntity user;
 

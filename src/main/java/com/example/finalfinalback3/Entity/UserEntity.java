@@ -2,12 +2,14 @@ package com.example.finalfinalback3.Entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.util.List;
 
 @Data
 @Entity
+@NoArgsConstructor
 public class UserEntity{// implements UserDetails {
     @Id
     @GeneratedValue
@@ -16,8 +18,6 @@ public class UserEntity{// implements UserDetails {
     private String login;
     private String password;
     private String password_confirm;
-    private String fullname;
-    private String phone_number;
     //@Column(columnDefinition = "varchar(255) default 'ROLE_USER'")
     private String role;
     private String token;
@@ -36,8 +36,8 @@ public class UserEntity{// implements UserDetails {
     )
     private List<TourEntity> history;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private DocumentEntity doc;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<DocumentEntity> doc;
     //TODO Добавить картинку пользователя
     //@Enumerated(EnumType.STRING)
     //private RoleEnum role;

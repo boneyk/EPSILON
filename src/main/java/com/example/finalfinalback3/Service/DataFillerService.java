@@ -71,9 +71,9 @@ public class DataFillerService {
         tourService.addTour(tour5);
         tourService.addTour(tour6);
 
-        PersonalInfoAddDTO person1 = new PersonalInfoAddDTO("Epsilon Developer team", "+79991115050");
+        //PersonalInfoAddDTO person1 = new PersonalInfoAddDTO("Epsilon Developer team", "+79991115050");
 
-        userService.addPersonalInfo(person1, user2_token.getToken());
+        //userService.addPersonalInfo(person1, user2_token.getToken());
     }
 
 }

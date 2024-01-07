@@ -1,6 +1,6 @@
 package com.example.finalfinalback3.Advice;
 
-import com.example.finalfinalback3.Exceptions.AccessException;
+import com.example.finalfinalback3.Annotation.ExceptionTestHandler;
 import com.example.finalfinalback3.Exceptions.DataAlreadyExistsException;
 import com.example.finalfinalback3.Exceptions.DataNotFoundException;
 import com.example.finalfinalback3.Exceptions.PasswordsNotSameException;
@@ -10,17 +10,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-@ControllerAdvice
-public class DefaultAdvice {
+@ControllerAdvice(annotations = ExceptionTestHandler.class)
+public class ExceptionTestAdvice {
 
     @ExceptionHandler({
             DataAlreadyExistsException.class,
             PasswordsNotSameException.class,
-            DataNotFoundException.class,
-            AccessException.class
+            DataNotFoundException.class
     })
     public ResponseEntity handleException(Exception e){
-        ResponseException response = new ResponseException(e.getMessage());
+        System.out.println("YOU ARE IN EXCEPTION_TEST_ADVICE");
+        ResponseException response = new ResponseException("TEST_EXCEPTION:" + e.getMessage());
         return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
     }
 }

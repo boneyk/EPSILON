@@ -1,11 +1,10 @@
 package com.example.finalfinalback3.Service;
 
-import com.example.finalfinalback3.DTO.PersonalInfoAddDTO;
-import com.example.finalfinalback3.DTO.PersonalInfoMainDTO;
+import com.example.finalfinalback3.DTO.AccountInfoChangeDTO;
+import com.example.finalfinalback3.Model.AccountInfoMain;
 import com.example.finalfinalback3.Entity.UserEntity;
 import com.example.finalfinalback3.Exceptions.DataNotFoundException;
 import com.example.finalfinalback3.Repository.UserRepository;
-import org.apache.catalina.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,17 +60,9 @@ public class UserService {
         userRepo.save(user);
     }
 
-    //Прости, Господь, за это
-    public UserEntity addPersonalInfo(PersonalInfoAddDTO info, String token) throws DataNotFoundException{
+    public AccountInfoMain showAccountInfo(String token) throws DataNotFoundException{
         UserEntity user = getUserByToken(token);
-        user.setFullname(info.getFullname());
-        user.setPhone_number(info.getPhone_number());
-        return userRepo.save(user);
-    }
-
-    public PersonalInfoMainDTO showPersonalInfo(String token) throws DataNotFoundException{
-        UserEntity user = getUserByToken(token);
-        return modelMapper.map(user, PersonalInfoMainDTO.class);
+        return modelMapper.map(user, AccountInfoMain.class);
     }
 
     public UserEntity setUserRoleAdmin(Integer id) throws DataNotFoundException{
@@ -79,5 +70,6 @@ public class UserService {
         user.setRole("ADMIN");
         return userRepo.save(user);
     }
+
 }
 

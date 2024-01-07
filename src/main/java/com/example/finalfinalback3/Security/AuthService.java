@@ -1,5 +1,6 @@
 package com.example.finalfinalback3.Security;
 
+import com.example.finalfinalback3.DTO.AccountInfoChangeDTO;
 import com.example.finalfinalback3.DTO.UserAuthDTO;
 import com.example.finalfinalback3.DTO.UserRegisterDTO;
 import com.example.finalfinalback3.Entity.UserEntity;
@@ -16,6 +17,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -53,8 +55,9 @@ public class AuthService implements UserDetailsService {
         return  new Token(find_user.getToken());
     }
 
+    //@ExceptionHandler({DataAlreadyExistsException.class, PasswordsNotSameException.class})
     public Token registration(UserRegisterDTO user) throws DataAlreadyExistsException,
-            PasswordsNotSameException {
+                                                            PasswordsNotSameException {
         UserEntity find_user = authRepo.findByLogin(user.getLogin());
         if (find_user != null) {
             throw new DataAlreadyExistsException("Пользователь с таким логином уже существует!");
@@ -66,10 +69,21 @@ public class AuthService implements UserDetailsService {
         user.setPassword_confirm(passwordEncoder.encode(user.getPassword_confirm()));
         UserEntity new_user = authRepo.save(modelMapper.map(user, UserEntity.class));
         new_user.setToken(hashCode(user.getLogin()));
-        //docService.addDocument(new_user.getId());
         return new Token(authRepo.save(new_user).getToken());
     }
+    public Token changeAccountInfo(AccountInfoChangeDTO info, String token) throws DataNotFoundException{
+        UserEntity user = userRepo.findByToken(token);
+        if (user == null) {
+            throw new DataNotFoundException("Пользователь, которому нужно изменить данные, не найден");
+        }
 
+        if (info.getLogin() != null) {user.setLogin(info.getLogin());}
+        if (info.getEmail() != null) {user.setEmail(info.getEmail());}
+        if (info.getPassword() != null) {user.setPassword(passwordEncoder.encode(info.getPassword()));}
+        user.setToken(hashCode(user.getLogin()));
+        UserEntity new_user = authRepo.save(modelMapper.map(user, UserEntity.class));
+        return new Token(new_user.getToken());
+    }
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
